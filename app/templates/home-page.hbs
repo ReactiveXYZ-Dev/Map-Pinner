@@ -1,0 +1,28 @@
+{{#mapbox-gl class='map-container' as |map|}} 
+    {{map.image 'thumb' '/assets/thumb.png' width=48 height=48}}
+    
+    {{map.on 'click' (action 'mapClicked')}} 
+    
+    {{#map.source options=(hash 
+                            type='geojson' 
+                            data=markers) as |source|}} 
+        {{source.layer layer=(hash 
+                                type='symbol' 
+                                layout=(hash 
+                                    icon-image='thumb' 
+                                    icon-size=0.75
+                                    icon-allow-overlap=true
+                                    text-allow-overlap=true))}} 
+    {{/map.source}}
+
+    {{#map.source options=(hash
+                            type='geojson'
+                            data=arcs) as |source|}}
+        {{source.layer layer=(hash
+                                type='line'
+                                paint=(hash
+                                    line-width=2
+                                    line-color="#007cbf"))}}
+    {{/map.source}}
+
+{{/mapbox-gl}}

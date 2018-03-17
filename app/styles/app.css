@@ -1,0 +1,4 @@
+/* General CSS */
+@import 'general.css';
+/* Map container */
+@import 'map.css';

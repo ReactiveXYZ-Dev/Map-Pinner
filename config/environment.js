@@ -16,6 +16,21 @@ module.exports = function(environment) {
         Date: false
       }
     },
+    
+    contentSecurityPolicy: {
+      'img-src': "'self' data: *.mapbox.com",
+      'child-src': "blob:",
+      'connect-src': "'self' *.mapbox.com"
+    },
+
+    'mapbox-gl': {
+      accessToken: 'pk.eyJ1IjoicmVhY3RpdmV4eXoiLCJhIjoiY2pldWd3ZG02NzZtMDJ4bzczeHh5anhwaiJ9.NgHQVPh5UAquYGZQ79Bjew',
+      map: {
+        style: 'mapbox://styles/mapbox/streets-v9',
+        zoom: 4,
+        center: [-96.0469, 36.24] // default center to US
+      }
+    },
 
     APP: {
       // Here you can pass flags/options to your application instance
