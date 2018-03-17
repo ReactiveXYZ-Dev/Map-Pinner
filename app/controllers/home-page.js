@@ -10,7 +10,8 @@ export default Controller.extend({
      */
     selectedCoords: {
         lat: null,
-        lng: null
+        lng: null,
+        label: ""
     },
 
     allowMouseEnter: true,
@@ -37,8 +38,10 @@ export default Controller.extend({
         mapClicked({ target: map, point }) {
             // request for user input
             let label = prompt("Please enter a label");
-
-
+            if (!label) {
+                alert("No label entered. Please try again!");
+                return;
+            }
             // parse coordinates
             let coordsPair = map.unproject(point);
             // connect the previous point with an arc
@@ -58,9 +61,11 @@ export default Controller.extend({
             if (!this.get('allowMouseEnter')) return;
             map.getCanvas().style.cursor = 'pointer';
             // update current coords
+            console.log(features[0]);
             this.set('selectedCoords', {
                 lng: features[0].geometry.coordinates[0],
-                lat: features[0].geometry.coordinates[1]
+                lat: features[0].geometry.coordinates[1],
+                label: features[0].properties.label
             });
             // show popup
             let $popup = $('#info-popup');
@@ -142,10 +147,10 @@ export default Controller.extend({
         };
         var lineDistance = window.turf.lineDistance(geojson, 'kilometers');
         // construct line segments
+        // Warning: this might not appear like an arc for closer distance
         for (var i = 0; i < Math.ceil(lineDistance); i++) {
             var segment = window.turf.along(geojson, i/200 * lineDistance, 'kilometers');
             arcCoords.push(segment.geometry.coordinates);
-            // TODO: this might not appear like an arc for closer distance
         }
         // save to feature
         return arcCoords;
