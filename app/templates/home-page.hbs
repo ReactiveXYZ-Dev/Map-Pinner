@@ -1,18 +1,32 @@
+{{!-- Map --}}
 {{#mapbox-gl class='map-container' as |map|}} 
     {{map.image 'thumb' '/assets/thumb.png' width=48 height=48}}
     
     {{map.on 'click' (action 'mapClicked')}} 
     
+    {{map.on 'mouseenter' 'custom-markers' 'mouseHovering' }}
+    {{map.on 'mouseleave' 'custom-markers' 'mouseLeaving' }}
+
     {{#map.source options=(hash 
                             type='geojson' 
                             data=markers) as |source|}} 
         {{source.layer layer=(hash 
-                                type='symbol' 
+                                id="custom-markers"
+                                type='symbol'
                                 layout=(hash 
                                     icon-image='thumb' 
                                     icon-size=0.75
                                     icon-allow-overlap=true
-                                    text-allow-overlap=true))}} 
+                                    text-allow-overlap=true))}}
+        
+        {{source.layer layer=(hash 
+                                id="custom-labels"
+                                type='symbol'
+                                layout=(hash 
+                                    text-field="{label}"
+                                    text-size=12
+                                    text-offset=textTranslate))}}
+
     {{/map.source}}
 
     {{#map.source options=(hash
@@ -25,4 +39,24 @@
                                     line-color="#007cbf"))}}
     {{/map.source}}
 
+
 {{/mapbox-gl}}
+{{!-- Popups --}}
+<div class="map-popup" style="display: none" id="info-popup">
+    <a class="close" onclick={{action 'hidePopup'}}>X</a>
+    <div class="image-container">
+        <img src="/assets/large.png" alt="I am a large thumbnail">
+    </div>
+    <div class="content">
+        This location has coordinates <br>
+        <span id="coords">{{selectedCoords.lng}} | {{selectedCoords.lat}}</span>
+    </div>
+    <div class="footer">
+        <div style="width: 50%; display: inline; float: left">
+            <a class="btn" target="_blank" href="https://yahoo.com">Yahoo</a>
+        </div>
+        <div style="width: 50%; display: inline; float: right">
+            <a class="btn" target="_blank" href="https://google.com">Google</a>
+        </div>
+    </div>
+</div>

@@ -2,3 +2,52 @@
     width: 100vw;
     height: 100vh
 }
+
+.map-popup {
+    width: 300px; 
+    height: 350px; 
+    z-index:999999; 
+    position: absolute;
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.map-popup > .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.map-popup > .image-container {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.map-popup > .image-container > img {
+    width: 100%
+}
+
+.map-popup > .content {
+    margin-top: 30px;
+}
+
+.map-popup > .content > #coords {
+    font-weight: bold;
+}
+
+.map-popup > .footer {
+    bottom: 40px;
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.map-popup > .footer .btn {
+    color: gray;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px dashed gray;
+}
